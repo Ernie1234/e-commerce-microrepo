@@ -5,6 +5,8 @@ on:
     branches:
       - master
   pull_request:
+    branches:
+      - master
 
 permissions:
   actions: read
@@ -14,9 +16,13 @@ jobs:
   main:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - name: Checkout repository
+        uses: actions/checkout@v4
         with:
-          filter: tree:0
+          # `fetch-depth: 0` is correct for full history
+          # `filter: tree:0` is generally not needed with fetch-depth: 0,
+          # and might cause issues if not configured exactly right.
+          # Stick to just fetch-depth: 0 unless you have a specific reason for `filter: tree:0`
           fetch-depth: 0
 
       # This enables task distribution via Nx Cloud
@@ -26,15 +32,69 @@ jobs:
       # - run: npx nx-cloud start-ci-run --distribute-on="3 linux-medium-js" --stop-agents-after="build"
 
       # Cache node_modules
-      - uses: actions/setup-node@v4
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
         with:
           node-version: 20
           cache: 'npm'
 
-      - run: npm ci --legacy-peer-deps
-      - uses: nrwl/nx-set-shas@v4
+      - name: Install dependencies
+        run: npm ci --legacy-peer-deps
+
+      - name: Set Nx affected base and head
+        uses: nrwl/nx-set-shas@v4
+
+      # --- NEW STEP: Start Auth Service in Background ---
+      # It's crucial to run the auth-service before its E2E tests
+      - name: Start Auth Service
+        # We need to explicitly load the .env file for the auth-service to get the correct port.
+        # This mirrors the logic in your global-setup.ts
+        env:
+          # Non-sensitive or fixed variables
+          PORT: ${{ vars.AUTH_SERVICE_PORT || 6001 }} # Use GitHub Actions variable or fallback
+          REDIS_PORT: 6379
+          SMTP_SERVICE: 'gmail'
+          SMTP_HOST: 'smtp.gmail.com'
+          SMTP_PORT: 465
+          NODE_ENV: 'development'
+
+          # Sensitive credentials from GitHub Secrets
+          # These must be defined in your repository's GitHub Actions secrets.
+          DATABASE_URL: ${{ secrets.DATABASE_URL }}
+          REDIS_PASSWORD: ${{ secrets.REDIS_PASSWORD }}
+          REDIS_HOST: ${{ secrets.REDIS_HOST }}
+          REDIS_URL: ${{ secrets.REDIS_URL }}
+          SMTP_USER: ${{ secrets.SMTP_USER }}
+          SMTP_PASS: ${{ secrets.SMTP_PASS }}
+          REFRESH_TOKEN_SECRET: ${{ secrets.REFRESH_TOKEN_SECRET }}
+          ACCESS_TOKEN_SECRET: ${{ secrets.ACCESS_TOKEN_SECRET }}
+        run: |
+          # Use `npm exec` to run the nx serve command directly in the shell
+          # The `&` runs it in the background
+          # We use `nohup` for robustness (prevents it from dying if the shell exits prematurely)
+          # And `bash -c '...'` ensures the command is executed as a single unit
+          nohup bash -c 'npx nx serve auth-service --port $PORT &'
+          # Wait for the service to actually be listening on the port
+          # Install wait-on if not already available in the runner
+          npm install -g wait-on
+          wait-on tcp:$PORT -t 120000 # Wait for up to 2 minutes
 
       # Prepend any command with "nx-cloud record --" to record its logs to Nx Cloud
       # - run: npx nx-cloud record -- echo Hello World
       # Nx Affected runs only tasks affected by the changes in this PR/commit. Learn more: https://nx.dev/ci/features/affected
-      - run: npx nx affected -t lint test build
+      - name: Run Nx affected lint test build
+        run: npx nx affected -t lint test build
+        # Add --verbose if you want more detailed Nx logs
+        # run: npx nx affected -t lint test build --verbose
+
+      # --- NEW STEP: Stop Auth Service after tests (cleanup) ---
+      # This is crucial to prevent zombie processes and ensures a clean run for subsequent jobs/builds
+      - name: Stop Auth Service
+        if: always() # This ensures the cleanup runs even if previous steps fail
+        env:
+          PORT: ${{ vars.AUTH_SERVICE_PORT || 6001 }} # Use GitHub Actions variable or fallback
+        run: |
+          # Use lsof for Linux to find the process ID using the port and kill it
+          # `|| true` prevents the step from failing if no process is found (e.g., if it already crashed)
+          kill $(lsof -t -i:$PORT) || true
+          echo "Killed process on port $PORT"

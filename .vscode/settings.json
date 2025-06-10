@@ -1,6 +1,7 @@
 {
   "nxConsole.generateAiAgentRules": true,
   "editor.formatOnSave": true,
+  "vscode-yaml-sort.sortOnSave": 0,
   "[prisma]": {
     "editor.defaultFormatter": "Prisma.prisma"
   }
