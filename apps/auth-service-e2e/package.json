@@ -1,10 +1,10 @@
 {
-  "name": "@my-microrepo/my-microrepo-e2e",
+  "name": "@my-microrepo/auth-service-e2e",
   "version": "0.0.1",
   "private": true,
   "nx": {
     "implicitDependencies": [
-      "@my-microrepo/my-microrepo"
+      "auth-service"
     ],
     "targets": {
       "e2e": {
@@ -13,12 +13,12 @@
           "{projectRoot}/test-output/jest/coverage"
         ],
         "options": {
-          "jestConfig": "apps/my-microrepo-e2e/jest.config.ts",
+          "jestConfig": "apps/auth-service-e2e/jest.config.ts",
           "passWithNoTests": true
         },
         "dependsOn": [
-          "@my-microrepo/my-microrepo:build",
-          "@my-microrepo/my-microrepo:serve"
+          "@my-microrepo/auth-service:build",
+          "@my-microrepo/auth-service:serve"
         ]
       }
     }

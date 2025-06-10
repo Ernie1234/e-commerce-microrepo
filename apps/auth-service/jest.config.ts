@@ -10,7 +10,7 @@ const swcJestConfig = JSON.parse(
 swcJestConfig.swcrc = false;
 
 export default {
-  displayName: '@my-microrepo/my-microrepo',
+  displayName: '@my-microrepo/auth-service',
   preset: '../../jest.preset.js',
   testEnvironment: 'node',
   transform: {

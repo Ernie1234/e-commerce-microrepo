@@ -1,5 +1,8 @@
 {
   "compilerOptions": {
+    "esModuleInterop": true,
+    "forceConsistentCasingInFileNames": true,
+    "sourceMap": true,
     "composite": true,
     "declarationMap": true,
     "emitDeclarationOnly": true,
@@ -14,8 +17,23 @@
     "noImplicitReturns": true,
     "noUnusedLocals": true,
     "skipLibCheck": true,
+    "skipDefaultLibCheck": true,
+    "baseUrl": ".",
+    "paths": {
+      "@packages/*": ["packages/*"]
+    },
+    "types": ["node", "jest"],
     "strict": true,
     "target": "es2022",
     "customConditions": ["development"]
-  }
+  },
+  "exclude": ["node_modules", "tmp", "dist"],
+  "include": [
+    "**/*.ts",
+    "**/*.tsx",
+    "**/*.js",
+    "**/*.jsx",
+    "./types/**/*.d.ts",
+    "*.d.ts"
+  ]
 }
