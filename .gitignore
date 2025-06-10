@@ -46,6 +46,10 @@ Thumbs.db
 test-output
 
 .env
+<<<<<<< HEAD
 .env.local.example
+=======
+.env.local
+>>>>>>> 8a23e48078b8dbe6e7f37868022aa16250e7b0d9
 .env.*.local
 /generated/prisma
