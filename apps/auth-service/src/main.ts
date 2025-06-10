@@ -31,7 +31,7 @@ app.get('/docs-json', (req, res) => {
 });
 
 app.get('/', (req, res) => {
-  res.send({ message: 'Hello auth API' });
+  res.send({ message: 'Welcome auth API' });
 });
 
 app.use('/api/v1', router);
