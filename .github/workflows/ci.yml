@@ -61,13 +61,7 @@ jobs:
           # Sensitive credentials from GitHub Secrets
           # These must be defined in your repository's GitHub Actions secrets.
           DATABASE_URL: ${{ secrets.DATABASE_URL }}
-          REDIS_PASSWORD: ${{ secrets.REDIS_PASSWORD }}
-          REDIS_HOST: ${{ secrets.REDIS_HOST }}
           REDIS_URL: ${{ secrets.REDIS_URL }}
-          SMTP_USER: ${{ secrets.SMTP_USER }}
-          SMTP_PASS: ${{ secrets.SMTP_PASS }}
-          REFRESH_TOKEN_SECRET: ${{ secrets.REFRESH_TOKEN_SECRET }}
-          ACCESS_TOKEN_SECRET: ${{ secrets.ACCESS_TOKEN_SECRET }}
         run: |
           # Use `npm exec` to run the nx serve command directly in the shell
           # The `&` runs it in the background
