@@ -1,7 +1,7 @@
 import React from 'react';
 
 function page() {
-  return <div>Home page</div>;
+  return <div className="font-Montserrat">Home page</div>;
 }
 
 export default page;
