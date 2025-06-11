@@ -19,18 +19,7 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
         with:
-          # `fetch-depth: 0` is correct for full history
-          # `filter: tree:0` is generally not needed with fetch-depth: 0,
-          # and might cause issues if not configured exactly right.
-          # Stick to just fetch-depth: 0 unless you have a specific reason for `filter: tree:0`
           fetch-depth: 0
-
-      # This enables task distribution via Nx Cloud
-      # Run this command as early as possible, before dependencies are installed
-      # Learn more at https://nx.dev/ci/reference/nx-cloud-cli#npx-nxcloud-startcirun
-      # Uncomment this line to enable task distribution
-      # - run: npx nx-cloud start-ci-run --distribute-on="3 linux-medium-js" --stop-agents-after="build"
-
       # Cache node_modules
       - name: Setup Node.js
         uses: actions/setup-node@v4
@@ -42,7 +31,13 @@ jobs:
         run: npm ci --legacy-peer-deps
 
       - name: Generate Swagger Docs
-        run: npm run auth-docs
+        run: npm run auth-docs -- --verbose
+      - name: Debug Generated Swagger JSON (Temporary)
+        run: |
+          ls -la apps/auth-service/src/utils/docs/ # List to confirm file exists
+          cat apps/auth-service/src/utils/docs/swagger-output.json || echo "swagger-output.json not found or empty" # Print content
+
+        continue-on-error: true
 
       - name: Set Nx affected base and head
         uses: nrwl/nx-set-shas@v4
@@ -50,9 +45,9 @@ jobs:
       # --- NEW STEP: Start Auth Service in Background ---
       # It's crucial to run the auth-service before its E2E tests
       - name: Start Auth Service
-        # We need to explicitly load the .env file for the auth-service to get the correct port.
-        # This mirrors the logic in your global-setup.ts
         env:
+          # Adding DEBUG environment variable for more verbose Node.js output
+          DEBUG: '*' # This enables debug logs from various modules
           # Non-sensitive or fixed variables
           PORT: ${{ vars.AUTH_SERVICE_PORT || 6001 }} # Use GitHub Actions variable or fallback
           REDIS_PORT: 6379
@@ -61,8 +56,6 @@ jobs:
           SMTP_PORT: 465
           NODE_ENV: 'development'
 
-          # Sensitive credentials from GitHub Secrets
-          # These must be defined in your repository's GitHub Actions secrets.
           DATABASE_URL: ${{ secrets.DATABASE_URL }}
           REDIS_URL: ${{ secrets.REDIS_URL }}
         run: |
@@ -76,20 +69,13 @@ jobs:
           npm install -g wait-on
           wait-on tcp:$PORT -t 120000 # Wait for up to 2 minutes
 
-      # Prepend any command with "nx-cloud record --" to record its logs to Nx Cloud
-      # - run: npx nx-cloud record -- echo Hello World
-      # Nx Affected runs only tasks affected by the changes in this PR/commit. Learn more: https://nx.dev/ci/features/affected
       - name: Run Nx affected lint test build
         run: npx nx affected -t lint test build
-        # Add --verbose if you want more detailed Nx logs
-        # run: npx nx affected -t lint test build --verbose
 
-      # --- NEW STEP: Stop Auth Service after tests (cleanup) ---
-      # This is crucial to prevent zombie processes and ensures a clean run for subsequent jobs/builds
       - name: Stop Auth Service
         if: always() # This ensures the cleanup runs even if previous steps fail
         env:
-          PORT: ${{ vars.AUTH_SERVICE_PORT || 6001 }} # Use GitHub Actions variable or fallback
+          PORT: ${{ vars.AUTH_SERVICE_PORT || 6001 }}
         run: |
           # Use lsof for Linux to find the process ID using the port and kill it
           # `|| true` prevents the step from failing if no process is found (e.g., if it already crashed)
