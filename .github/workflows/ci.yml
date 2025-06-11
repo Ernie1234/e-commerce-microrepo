@@ -30,6 +30,14 @@ jobs:
       - name: Install dependencies
         run: npm ci --legacy-peer-deps
 
+      # --- Install kill-port globally for the pre-server cleanup ---
+      - name: Install kill-port
+        run: npm install -g kill-port
+
+      # --- Proactively kill port 6001 before starting services ---
+      - name: Kill existing process on port 6001
+        run: npx kill-port 6001 || true # Use npx to ensure it runs, || true to prevent failure if port is free
+
       - name: Generate Swagger Docs
         run: npm run auth-docs -- --verbose
       - name: Debug Generated Swagger JSON (Temporary)
