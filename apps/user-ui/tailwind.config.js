@@ -17,6 +17,7 @@ module.exports = {
         Raleway: ['var(--font-raleway)'],
         Anta: ['var(--font-anta)'],
       },
+      caretColor: (theme) => theme('colors'),
     },
   },
   plugins: [],
