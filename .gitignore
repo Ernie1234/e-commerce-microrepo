@@ -50,3 +50,7 @@ test-output
 .env.local
 .env.*.local
 /generated/prisma
+
+# Next.js
+.next
+out
