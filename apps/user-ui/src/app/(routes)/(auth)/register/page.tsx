@@ -64,6 +64,7 @@ export default function RegisterPage() {
           if (prevTimer <= 1) {
             clearInterval(interval!);
             setCanResend(true);
+            setShowOtp(false);
             return 0;
           }
           return prevTimer - 1;
@@ -71,10 +72,11 @@ export default function RegisterPage() {
       }, 1000);
     } else if (timer === 0) {
       setCanResend(true);
+      setShowOtp(false);
       if (interval) clearInterval(interval);
     }
     return () => {
-      if (interval) clearInterval(interval); // Cleanup on component unmount
+      if (interval) clearInterval(interval);
     };
   }, [canResend, timer]);
 
@@ -88,9 +90,9 @@ export default function RegisterPage() {
           description: res.message,
           position: 'top-right',
         });
-        setUserData(formData); // Store data for OTP verification
+        setUserData(formData);
         setShowOtp(true);
-        setCanResend(false); // Start timer after successful registration
+        setCanResend(false);
         setTimer(60);
       },
       onError: (error) => {
