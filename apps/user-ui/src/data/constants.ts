@@ -9,4 +9,16 @@ export const navItem: NavItemsTypes[] = [
     title: 'Products',
     href: '/products',
   },
+  {
+    title: 'Shops',
+    href: '/shops',
+  },
+  {
+    title: 'Offers',
+    href: '/offers',
+  },
+  {
+    title: 'Become a Seller',
+    href: '/become-a-seller',
+  },
 ];

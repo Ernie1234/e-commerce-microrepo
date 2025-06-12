@@ -6,7 +6,7 @@ import HeaderBottom from './HeaderBottom';
 
 function Header() {
   return (
-    <header className="w-full bg-slate-100 dark:bg-slate-900">
+    <header className="w-full bg-slate-50 dark:bg-slate-900">
       <div className="w-[80%] py-5 m-auto flex items-center justify-between">
         <div>
           <Link href="/">

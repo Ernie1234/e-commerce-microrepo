@@ -57,7 +57,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${poppins.variable} ${anta.variable} ${roboto.variable} ${montserrat.variable} ${raleway.variable} ${lato.variable}`}
+        className={`${poppins.variable} ${anta.variable} ${roboto.variable} ${montserrat.variable} ${raleway.variable} ${lato.variable} bg-slate-100 dark:bg-slate-800 text-slate-800 dark:text-slate-200`}
       >
         <Header />
         {children}
