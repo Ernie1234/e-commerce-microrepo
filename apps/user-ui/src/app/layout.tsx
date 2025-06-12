@@ -12,6 +12,8 @@ import './global.css';
 import { ThemeProvider } from '../providers/theme-provider';
 import { FloatingThemeToggle } from '../components/shared/FloatingThemeToggle';
 import { Pointer } from '../components/ui/Pointer';
+import QueryProvider from '../providers/QueryProvider';
+import { Toaster } from '../components/ui/sonner';
 
 export const metadata = {
   title: 'Welcome to E-Commerce',
@@ -63,11 +65,14 @@ export default function RootLayout({
         className={`${poppins.variable} ${anta.variable} ${roboto.variable} ${montserrat.variable} ${raleway.variable} ${lato.variable} bg-primary-foreground text-foreground`}
       >
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
-          {/* <Pointer className="fill-tertiary dark:stroke-orange-200" /> */}
+          <QueryProvider>
+            {/* <Pointer className="fill-tertiary dark:stroke-orange-200" /> */}
 
-          <Header />
-          {children}
-          <FloatingThemeToggle />
+            <Header />
+            {children}
+            <Toaster richColors expand />
+            <FloatingThemeToggle />
+          </QueryProvider>
         </ThemeProvider>
       </body>
     </html>

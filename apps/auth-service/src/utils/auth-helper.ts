@@ -54,11 +54,11 @@ export const validateRegistrationData = (
 
   // Destructure common fields from the data object for easier access.
   // The 'phone_number' is conditionally destructured below as it's seller-specific.
-  const { name, email, password, country } = data;
+  const { name, email, password } = data;
 
   // --- Step 1: Check for Missing Common Required Fields ---
   // If any of these core fields are missing, return a ValidationError.
-  if (!name || !email || !password || !country) {
+  if (!name || !email || !password) {
     throw new ValidationError('Missing required fields.');
   }
 
