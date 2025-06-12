@@ -21,8 +21,8 @@
     "baseUrl": ".",
     "paths": {
       "@packages/*": ["packages/*"],
-      "@apps/*": ["apps/*"],
-      "@apps/user-ui/*": ["apps/user-ui/*"]
+      "@apps/*": ["apps/*"]
+      // "@apps/user-ui/*": ["apps/user-ui/*"]
     },
     "types": ["node", "jest"],
     "strict": true,

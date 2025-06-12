@@ -11,6 +11,7 @@ import Header from '../components/shared/Header';
 import './global.css';
 import { ThemeProvider } from '../providers/theme-provider';
 import { FloatingThemeToggle } from '../components/shared/FloatingThemeToggle';
+import { Pointer } from '../components/ui/Pointer';
 
 export const metadata = {
   title: 'Welcome to E-Commerce',
@@ -59,9 +60,11 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <body
-        className={`${poppins.variable} ${anta.variable} ${roboto.variable} ${montserrat.variable} ${raleway.variable} ${lato.variable} bg-background text-foreground`}
+        className={`${poppins.variable} ${anta.variable} ${roboto.variable} ${montserrat.variable} ${raleway.variable} ${lato.variable} bg-primary-foreground text-foreground`}
       >
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
+          {/* <Pointer className="fill-tertiary dark:stroke-orange-200" /> */}
+
           <Header />
           {children}
           <FloatingThemeToggle />

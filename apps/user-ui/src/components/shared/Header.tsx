@@ -6,11 +6,12 @@ import HeaderBottom from './HeaderBottom';
 
 function Header() {
   return (
-    <header className="w-full bg-slate-50 dark:bg-slate-900">
+    // Replaced bg-slate-50 dark:bg-slate-900 with bg-background
+    <header className="w-full bg-background">
       <div className="w-[80%] py-5 m-auto flex items-center justify-between">
         <div>
           <Link href="/">
-            <span className="text-xl font-medium text-orange-500">
+            <span className="text-xl font-medium text-tertiary">
               E-Commerce Shop
             </span>
           </Link>
@@ -19,38 +20,45 @@ function Header() {
           <input
             type="text"
             placeholder="Search for products"
-            className="w-full px-4 outline-none h-[40px] font-medium placeholder-shown:font-normal border-[2px] border-orange-500 dark:border-slate-800 bg-slate-100 dark:bg-slate-800/30 placeholder:text-slate-500 focus:outline-none focus:border-orange-500 dark:focus:border-slate-700 transition-all duration-500 peer dark:caret-slate-50 text-slate-50"
+            className="w-full px-4 outline-none h-[40px] font-medium placeholder-text-placeholder border-[2px] border-tertiary dark:border-border bg-input dark:bg-input/30 focus:outline-none focus:border-tertiary dark:focus:border-focus transition-all duration-500 peer text-input-foreground"
           />
-          <div className="w-[60px] cursor-pointer flex items-center justify-center h-[40px] bg-orange-500 dark:bg-slate-800 absolute top-0 right-0 peer-focus:bg-slate-600">
-            <Search className="dark:text-slate-400" />
+          <div
+            // Replaced dark:bg-slate-800 with dark:bg-muted, and peer-focus:bg-slate-600 with peer-focus:bg-active
+            className="w-[60px] cursor-pointer flex items-center justify-center h-[40px] bg-tertiary dark:bg-muted absolute top-0 right-0 peer-focus:bg-active"
+          >
+            {/* Replaced dark:text-slate-400 with dark:text-muted-foreground */}
+            <Search className="dark:text-muted-foreground" />
           </div>
         </div>
         <div className="flex items-center gap-4 transition-all duration-500">
           <div className="flex items-center gap-2">
             <Link
               href="/login"
-              className="border-2 p-1 flex items-center justify-center rounded-full hover:bg-slate-200 hover:border-slate-500 group transition-all duration-500 dark:hover:bg-slate-500 dark:border-slate-400"
+              // Using new semantic classes: hover:bg-hover, hover:border-muted-foreground
+              // dark:hover:bg-hover (mapped to slate-500 dark)
+              // dark:border-muted-foreground (mapped to slate-400 dark)
+              className="border-2 p-1 flex items-center justify-center rounded-full hover:bg-hover hover:border-muted-foreground group transition-all duration-500 dark:hover:bg-hover dark:border-muted-foreground"
             >
-              <FaRegUser className="group-hover:text-slate-500 transition-all duration-500 dark:text-slate-400 dark:group-hover:text-slate-200" />
+              <FaRegUser className="group-hover:text-muted-foreground transition-all duration-500 dark:text-muted-foreground dark:group-hover:text-foreground" />
             </Link>
           </div>
           <Link href="/login">
-            <span className="block font-Poppins text-sm dark:text-slate-300">
+            <span className="block font-Poppins text-sm dark:text-muted-foreground">
               Hello,
             </span>
-            <span className="font-semibold font-Poppins text-base dark:text-slate-200">
+            <span className="font-semibold font-Poppins text-base dark:text-foreground">
               Sign In
             </span>
           </Link>
           <div className="flex items-center gap-5">
             <Link href="/wishlist" className="relative group">
-              <Heart className="dark:text-slate-400 dark:group-hover:text-slate-200 transition-all duration-300" />
+              <Heart className="dark:text-muted-foreground dark:group-hover:text-foreground transition-all duration-300" />
               <div className="bg-red-500 rounded-full flex items-center justify-center absolute top-[-10px] right-[-10px] w-6 h-6 border-white">
                 <span className="text-white font-medium text-sm">0</span>
               </div>
             </Link>
             <Link href="/cart" className="relative group">
-              <ShoppingCart className="dark:text-slate-400 dark:group-hover:text-slate-200 transition-all duration-300" />
+              <ShoppingCart className="dark:text-muted-foreground dark:group-hover:text-foreground transition-all duration-300" />
               <div className="bg-red-500 rounded-full flex items-center justify-center absolute top-[-10px] right-[-10px] w-6 h-6 border-white">
                 <span className="text-white font-medium text-sm">0</span>
               </div>
@@ -58,7 +66,7 @@ function Header() {
           </div>
         </div>
       </div>
-      <div className="border-b border-b-slate-300 dark:border-b-slate-800" />
+      <div className="border-b border-b-border" />
       <HeaderBottom />
     </header>
   );

@@ -4,65 +4,175 @@
 
 @layer base {
   :root {
-    --background: 0 0% 100%;
-    --foreground: 222.2 47.4% 11.2%;
+    /* Background and Foreground (using slate-50 and default dark foreground) */
+    --background: 220 13% 97%; /* slate-50 */
+    --foreground: 222.2 47.4% 11.2%; /* Original dark foreground for text */
 
-    --muted: 210 40% 96.1%;
-    --muted-foreground: 215.4 16.3% 46.9%;
+    /* Muted (for secondary text, icons - mapped to slate-200 / slate-500) */
+    --muted: 220 14% 91%; /* slate-200 */
+    --muted-foreground: 220 9% 46%; /* slate-500 */
 
+    /* New variable for slate-700 in light mode */
+    --text-content-light-dark: 222 13% 28%; /* slate-700 */
+
+    /* Popover */
     --popover: 0 0% 100%;
     --popover-foreground: 222.2 47.4% 11.2%;
 
-    --border: 214.3 31.8% 91.4%;
-    --input: 214.3 31.8% 91.4%;
+    /* Borders (mapped to slate-300) */
+    --border: 220 13% 84%; /* slate-300 */
+
+    /* Input specific colors (mapped to slate-100, slate-500, slate-900) */
+    --input: 220 12% 95%; /* slate-100 for input background */
+    --input-foreground: 222.2 47.4% 11.2%; /* For input text (dark on light) */
+    --input-caret: 222.2 47.4% 11.2%; /* For input caret (dark on light) */
+    --placeholder: 220 9% 46%; /* slate-500 for placeholder text */
+
+    /* Card */
     --card: 0 0% 100%;
     --card-foreground: 222.2 47.4% 11.2%;
 
+    /* Primary colors */
     --primary: 222.2 47.4% 11.2%;
     --primary-foreground: 210 40% 98%;
 
-    --secondary: 210 40% 96.1%;
-    --secondary-foreground: 222.2 47.4% 11.2%;
+    /* Updated secondary colors - Blue theme */
+    --secondary: 214 95% 93%;
+    --secondary-foreground: 214 84% 25%;
 
+    /* New tertiary colors - Orange theme */
+    --tertiary: 25 95% 60%;
+    --tertiary-foreground: 25 100% 15%;
+
+    /* Accent colors */
     --accent: 210 40% 96.1%;
     --accent-foreground: 222.2 47.4% 11.2%;
 
-    --destructive: 0 91% 51%;
+    /* Status colors */
+    --destructive: 0 84.5% 55.3%;
     --destructive-foreground: 210 40% 98%;
+    --success: 142 76% 36%;
+    --success-foreground: 142 85% 96%;
+    --warning: 48 96% 53%;
+    --warning-foreground: 48 100% 15%;
+    --info: 214 95% 60%;
+    --info-foreground: 214 84% 15%;
 
-    --ring: 215 20.2% 65.1%;
+    /* Link colors */
+    --link: 214 95% 50%;
+    --link-hover: 214 95% 40%;
+    --link-visited: 270 95% 50%;
+
+    /* Additional semantic colors */
+    --brand: 262 85% 58%;
+    --brand-foreground: 262 100% 98%;
+    --neutral: 220 13% 91%;
+    --neutral-foreground: 220 39% 11%;
+
+    /* Surface colors */
+    --surface: 0 0% 98%;
+    --surface-foreground: 222.2 47.4% 11.2%;
+    --elevated: 0 0% 100%;
+    --elevated-foreground: 222.2 47.4% 11.2%;
+
+    /* Interactive states */
+    --hover: 220 14% 91%; /* slate-200 for general hover */
+    --active: 220 10% 39%; /* slate-600 for general active/focus-bg */
+    --focus: 25 95% 60%; /* tertiary for focus border */
+    --ring: 215 20.2% 65.1%; /* Original ring color */
 
     --radius: 0.5rem;
+
+    /* Direct Slate Colors for reference or specific use cases */
+    --slate-50: 220 13% 97%;
+    --slate-100: 220 12% 95%;
+    --slate-200: 220 14% 91%;
+    --slate-300: 220 13% 84%;
+    --slate-400: 220 9% 66%;
+    --slate-500: 220 9% 46%;
+    --slate-600: 220 10% 39%;
+    --slate-700: 222 13% 28%;
+    --slate-800: 222 12% 19%;
+    --slate-900: 222 13% 11%;
   }
 
   .dark {
-    --background: 222.2 47.4% 11.2%;
-    --foreground: 210 40% 98%;
+    /* Background and Foreground (using slate-900 and original light foreground) */
+    --background: 222 13% 11%;
+    --foreground: 210 40% 98%; /* Original light foreground for text */
 
-    --muted: 217.2 32.6% 17.5%;
-    --muted-foreground: 215 20.2% 65.1%;
+    /* Muted (for secondary text, icons - mapped to slate-800 / slate-400) */
+    --muted: 222 12% 19%; /* slate-800 */
+    --muted-foreground: 220 9% 66%; /* slate-400 */
 
+    /* New variable for slate-300 in dark mode */
+    --text-content-light-dark: 220 13% 84%; /* slate-300 */
+
+    /* Popover */
     --popover: 222.2 47.4% 11.2%;
     --popover-foreground: 210 40% 98%;
 
-    --border: 217.2 32.6% 17.5%;
-    --input: 217.2 32.6% 17.5%;
+    /* Borders (mapped to slate-800) */
+    --border: 222 12% 19%; /* slate-800 */
+
+    /* Input specific colors (mapped to slate-800, slate-50, slate-400) */
+    --input: 222 12% 19%; /* slate-800 for input background */
+    --input-foreground: 220 13% 97%; /* slate-50 for input text */
+    --input-caret: 220 13% 97%; /* slate-50 for input caret */
+    --placeholder: 220 9% 66%; /* slate-400 for placeholder text */
+
+    /* Card */
     --card: 222.2 47.4% 11.2%;
     --card-foreground: 210 40% 98%;
 
+    /* Primary colors */
     --primary: 210 40% 98%;
     --primary-foreground: 222.2 47.4% 11.2%;
 
-    --secondary: 217.2 32.6% 17.5%;
-    --secondary-foreground: 210 40% 98%;
+    /* Updated secondary colors - Blue theme for dark */
+    --secondary: 214 32% 25%;
+    --secondary-foreground: 214 95% 85%;
 
+    /* New tertiary colors - Orange theme for dark */
+    --tertiary: 25 85% 55%;
+    --tertiary-foreground: 25 100% 95%;
+
+    /* Accent colors */
     --accent: 217.2 32.6% 17.5%;
     --accent-foreground: 210 40% 98%;
 
-    --destructive: 0 63.9% 38.6%;
+    /* Status colors */
+    --destructive: 0 63.9% 50.3%;
     --destructive-foreground: 210 40% 98%;
+    --success: 142 70% 45%;
+    --success-foreground: 142 85% 96%;
+    --warning: 48 90% 58%;
+    --warning-foreground: 48 100% 10%;
+    --info: 214 85% 65%;
+    --info-foreground: 214 100% 10%;
 
-    --ring: 217.2 32.6% 17.5%;
+    /* Link colors */
+    --link: 214 85% 65%;
+    --link-hover: 214 85% 75%;
+    --link-visited: 270 85% 65%;
+
+    /* Additional semantic colors */
+    --brand: 262 80% 63%;
+    --brand-foreground: 262 100% 5%;
+    --neutral: 220 15% 25%;
+    --neutral-foreground: 220 50% 85%;
+
+    /* Surface colors */
+    --surface: 217.2 32.6% 15%;
+    --surface-foreground: 210 40% 98%;
+    --elevated: 217.2 32.6% 20%;
+    --elevated-foreground: 210 40% 98%;
+
+    /* Interactive states */
+    --hover: 220 9% 46%; /* slate-500 for general hover */
+    --active: 222 13% 28%; /* slate-700 for general active/focus-bg */
+    --focus: 222 13% 28%; /* slate-700 for focus border */
+    --ring: 217.2 32.6% 17.5%; /* Original ring color */
   }
 }
 
@@ -71,6 +181,58 @@
     @apply border-border;
   }
   body {
-    /* @apply bg-background text-foreground; */
+    /* Apply the new background color to the body */
+    @apply bg-background text-foreground;
+  }
+
+  /* Additional utility classes for new colors */
+  .text-tertiary {
+    color: hsl(var(--tertiary));
+  }
+
+  .bg-tertiary {
+    background-color: hsl(var(--tertiary));
+  }
+
+  .text-link {
+    color: hsl(var(--link));
+  }
+
+  .text-link:hover {
+    color: hsl(var(--link-hover));
+  }
+
+  .text-success {
+    color: hsl(var(--success));
+  }
+
+  .text-warning {
+    color: hsl(var(--warning));
+  }
+
+  .text-info {
+    color: hsl(var(--info));
+  }
+
+  .bg-brand {
+    background-color: hsl(var(--brand));
+  }
+
+  .text-brand {
+    color: hsl(var(--brand));
+  }
+
+  /* New utility classes for input and placeholder */
+  .text-input-foreground {
+    color: hsl(var(--input-foreground));
+  }
+
+  .placeholder-text-placeholder::placeholder {
+    color: hsl(var(--placeholder));
+  }
+
+  /* New utility class for the content text */
+  .text-content-light-dark {
+    color: hsl(var(--text-content-light-dark));
   }
 }
