@@ -1,14 +1,16 @@
-import Header from '../components/shared/Header';
-import './global.css';
 import {
   Anta,
   Poppins,
   Roboto,
   Montserrat,
-  Inter,
   Raleway,
   Lato,
 } from 'next/font/google';
+
+import Header from '../components/shared/Header';
+import './global.css';
+import { ThemeProvider } from '../providers/theme-provider';
+import { FloatingThemeToggle } from '../components/shared/FloatingThemeToggle';
 
 export const metadata = {
   title: 'Welcome to E-Commerce',
@@ -55,12 +57,15 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en">
+    <html lang="en" suppressHydrationWarning>
       <body
-        className={`${poppins.variable} ${anta.variable} ${roboto.variable} ${montserrat.variable} ${raleway.variable} ${lato.variable} bg-slate-100 dark:bg-slate-800 text-slate-800 dark:text-slate-200`}
+        className={`${poppins.variable} ${anta.variable} ${roboto.variable} ${montserrat.variable} ${raleway.variable} ${lato.variable} bg-background text-foreground`}
       >
-        <Header />
-        {children}
+        <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
+          <Header />
+          {children}
+          <FloatingThemeToggle />
+        </ThemeProvider>
       </body>
     </html>
   );

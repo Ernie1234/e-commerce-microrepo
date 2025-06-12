@@ -20,7 +20,9 @@
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
     "paths": {
-      "@packages/*": ["packages/*"]
+      "@packages/*": ["packages/*"],
+      "@apps/*": ["apps/*"],
+      "@apps/user-ui/*": ["apps/user-ui/*"]
     },
     "types": ["node", "jest"],
     "strict": true,

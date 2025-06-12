@@ -10,11 +10,7 @@
     "moduleResolution": "bundler",
     "resolveJsonModule": true,
     "isolatedModules": true,
-    "lib": [
-      "dom",
-      "dom.iterable",
-      "esnext"
-    ],
+    "lib": ["dom", "dom.iterable", "esnext"],
     "allowJs": true,
     "allowSyntheticDefaultImports": true,
     "forceConsistentCasingInFileNames": true,
@@ -24,6 +20,13 @@
         "name": "next"
       }
     ]
+  },
+  "types": ["jest", "node"],
+  "baseUrl": ".",
+  "paths": {
+    "@/components/*": ["src/components/*"],
+    "@/lib/*": ["lib/*"],
+    "@/app/*": ["src/app/*"]
   },
   "include": [
     "**/*.js",
@@ -35,10 +38,5 @@
     "next-env.d.ts",
     ".next/types/**/*.ts"
   ],
-  "exclude": [
-    "node_modules",
-    "jest.config.ts",
-    "**/*.spec.ts",
-    "**/*.test.ts"
-  ]
+  "exclude": ["node_modules", "jest.config.ts", "**/*.spec.ts", "**/*.test.ts"]
 }
