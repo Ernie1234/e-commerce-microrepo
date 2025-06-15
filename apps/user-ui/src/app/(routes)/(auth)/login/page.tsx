@@ -2,14 +2,15 @@
 
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
-import { useTheme } from 'next-themes';
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { motion, type AnimationProps } from 'motion/react';
+import { isAxiosError } from 'axios';
+import { toast } from 'sonner';
 
 import GoogleBtn from '../../../../components/ui/GoogleBtn';
 import { BorderBeam } from '../../../../components/ui/BorderBeam';
-import { Separator } from '../../../../components/ui/separator';
+import authHooks from '../../../../hooks/auth-hooks/index';
 
 type FormData = {
   email: string;
@@ -39,23 +40,47 @@ const shinyAnimationProps = {
 
 export default function LoginPage() {
   const router = useRouter();
-  const { theme } = useTheme();
   const [passwordVisible, setPasswordVisible] = useState(false);
-  const [setserverError, setSetserverError] = useState(false);
+  const [serverError, setServerError] = useState<string | null>(null);
   const [rememberMe, setRememberMe] = useState(false);
-  const [isLoading, setIsLoading] = useState(false); //TODO: TO BE REMOVE LATER
+
+  // Initialize React Query mutation for login
+  const { useLoginUser } = authHooks;
+  const loginMutation = useLoginUser();
 
   const form = useForm<FormData>();
 
-  const handleSubmit = (data: FormData) => {
-    console.log(data);
-  };
+  // Handler for form submission using React Query mutation
+  const handleLoginSubmit = form.handleSubmit(async (data: FormData) => {
+    setServerError(null); // Clear previous errors
+    loginMutation.mutate(data, {
+      onSuccess: (res) => {
+        console.log('Login successful:', res);
+        toast.success('Login Successful', {
+          description: res.message || 'You have successfully logged in.',
+          position: 'top-right',
+        });
+        router.push('/');
+      },
+      onError: (error) => {
+        let errorMessage = 'Login failed. Please try again.';
+        if (isAxiosError(error) && error.response?.data?.message) {
+          errorMessage = error.response.data.message;
+        } else if (error instanceof Error) {
+          errorMessage = error.message;
+        }
+        setServerError(errorMessage);
+        toast.error('Login Failed', {
+          description: errorMessage,
+          position: 'top-right',
+        });
+      },
+    });
+  });
 
   return (
-    // Replaced bg-slate-100 dark:bg-slate-800 with bg-surface dark:bg-muted
     <div className="w-full py-20 min-h-[85vh] bg-primary-foreground">
       <h1 className="text-3xl font-Poppins font-semibold text-center">Login</h1>
-      {/* Replaced text-slate-800 with text-foreground */}
       <p className="text-center text-lg py-3 text-foreground">Welcome back, </p>
       <div className="w-full flex justify-center">
         <div className="p-8 bg-background shadow-xl rounded-xl md:w-[540px] relative">
@@ -78,7 +103,7 @@ export default function LoginPage() {
           </div>
 
           {/* FORM */}
-          <form onSubmit={form.handleSubmit(handleSubmit)}>
+          <form onSubmit={handleLoginSubmit}>
             <label
               htmlFor="email"
               className="block mb-1 text-content-light-dark"
@@ -170,10 +195,10 @@ export default function LoginPage() {
                 backgroundSize: '200% 100%', // Makes the gradient twice as wide as the button to animate across
                 backgroundPositionX: 'var(--x)', // Controls the horizontal position of the background
               }}
-              disabled={isLoading} // Disable the button when loading
-              {...shinyAnimationProps} // Apply the animation properties
+              disabled={loginMutation.isPending}
+              {...shinyAnimationProps}
             >
-              {isLoading ? (
+              {loginMutation.isPending ? (
                 <div className="flex items-center justify-center">
                   {/* Simple loading spinner */}
                   <svg
@@ -226,10 +251,8 @@ export default function LoginPage() {
             </motion.button>
 
             {/* Server Error Message */}
-            {setserverError && (
-              <p className="text-destructive text-center mt-4">
-                Invalid credentials. Please try again.
-              </p>
+            {serverError && (
+              <p className="text-destructive text-center mt-4">{serverError}</p>
             )}
           </form>
 

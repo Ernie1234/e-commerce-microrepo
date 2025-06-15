@@ -80,9 +80,6 @@ export const validateRegistrationData = (
   if (!emailRegex.test(email)) {
     throw new ValidationError('Invalid email format.');
   }
-
-  // If all checks pass, the function implicitly returns undefined (void).
-  // No explicit 'return;' is needed here.
 };
 
 // Note: The 'crypto' import is present but not used in this specific function.
