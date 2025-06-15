@@ -1,8 +1,3 @@
-import {
-  BaseRegistrationData,
-  SellerRegistrationData,
-} from '../apps/auth-service/src/validators/joiValidation';
-
 /**
  * @fileoverview Global type declarations for Node.js specific features.
  * This file extends the built-in ErrorConstructor interface to include
@@ -19,15 +14,14 @@ declare global {
     // eslint-disable-next-line @typescript-eslint/no-unsafe-function-type
     captureStackTrace(targetObject: object, constructorOpt?: Function): void;
   }
-  namespace Express {
-    interface Request {
-      validatedData?: BaseRegistrationData | SellerRegistrationData | any;
-      validatedBody?: BaseRegistrationData | SellerRegistrationData | any;
+}
 
-      validatedQuery?: any;
-
-      validatedParams?: any;
-    }
+// Augment the 'express-serve-static-core' module directly.
+// This is the most reliable way to add properties to Express's Request/Response objects,
+// especially when 'isolatedModules' is enabled.
+declare module 'express-serve-static-core' {
+  interface Request {
+    user?: any;
   }
 }
 

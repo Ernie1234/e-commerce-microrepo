@@ -1,4 +1,4 @@
-import { Request, Response, NextFunction } from 'express';
+import { Request, Response } from 'express';
 
 import { AppError } from './index';
 
@@ -10,15 +10,10 @@ import { AppError } from './index';
  * @param {Error} err - The error object caught by Express.
  * @param {Request} req - The Express request object.
  * @param {Response} res - The Express response object.
- * @param {NextFunction} next - The Express next middleware function (required even if not used).
+ * @param {NextFunction} _next - The Express next middleware function (required even if not used).
  */
 
-export const errorMiddleware = (
-  err: Error,
-  req: Request,
-  res: Response,
-  next: NextFunction
-) => {
+export const errorMiddleware = (err: Error, req: Request, res: Response) => {
   console.error(`[ERROR] ${req.method} ${req.url}:`, err);
   if (err instanceof AppError) {
     if (!err.isOperational) {

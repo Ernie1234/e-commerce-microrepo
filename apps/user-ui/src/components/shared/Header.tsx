@@ -1,8 +1,10 @@
+'use client';
+
 import React from 'react';
 import Link from 'next/link';
 import { Heart, Search, ShoppingCart } from 'lucide-react';
-import { FaRegUser } from 'react-icons/fa';
 import HeaderBottom from './HeaderBottom';
+import UserHeader from './UserHeader';
 
 function Header() {
   return (
@@ -31,25 +33,7 @@ function Header() {
           </div>
         </div>
         <div className="flex items-center gap-4 transition-all duration-500">
-          <div className="flex items-center gap-2">
-            <Link
-              href="/login"
-              // Using new semantic classes: hover:bg-hover, hover:border-muted-foreground
-              // dark:hover:bg-hover (mapped to slate-500 dark)
-              // dark:border-muted-foreground (mapped to slate-400 dark)
-              className="border-2 p-1 flex items-center justify-center rounded-full hover:bg-hover hover:border-muted-foreground group transition-all duration-500 dark:hover:bg-hover dark:border-muted-foreground"
-            >
-              <FaRegUser className="group-hover:text-muted-foreground transition-all duration-500 dark:text-muted-foreground dark:group-hover:text-foreground" />
-            </Link>
-          </div>
-          <Link href="/login">
-            <span className="block font-Poppins text-sm dark:text-muted-foreground">
-              Hello,
-            </span>
-            <span className="font-semibold font-Poppins text-base dark:text-foreground">
-              Sign In
-            </span>
-          </Link>
+          <UserHeader />
           <div className="flex items-center gap-5">
             <Link href="/wishlist" className="relative group">
               <Heart className="dark:text-muted-foreground dark:group-hover:text-foreground transition-all duration-300" />

@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 /**
  * This is not a production server yet!
  * This is only a minimal backend to get started.
@@ -40,7 +41,7 @@ app.use(limiter);
 
 app.use('/auth', proxy('http://localhost:6001'));
 
-app.get('/api', (req, res) => {
+app.get('/api', (_req, res) => {
   res.send({ message: 'Welcome to api-gateway!' });
 });
 

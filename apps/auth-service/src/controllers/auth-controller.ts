@@ -322,3 +322,30 @@ export const refreshToken = async (
     return next(error);
   }
 };
+
+// --- Get Logged In User ---
+export const getLoggedInUser = async (
+  req: Request & { user?: any },
+  res: Response,
+  next: NextFunction
+) => {
+  try {
+    const userId = req.user?.id;
+    const user = await prismaClient.users.findUnique({
+      where: { id: userId },
+    });
+    if (!user) {
+      throw new UnauthorizedError('Unauthorized! User not found');
+    }
+    res.status(200).json({
+      status: 'success',
+      message: 'Get logged in user successfully!',
+      data: {
+        ...user,
+        password: undefined,
+      },
+    });
+  } catch (error) {
+    return next(error);
+  }
+};

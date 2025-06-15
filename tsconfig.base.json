@@ -1,9 +1,11 @@
 {
   "compilerOptions": {
     "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true,
     "forceConsistentCasingInFileNames": true,
     "sourceMap": true,
     "composite": true,
+    "declaration": true,
     "declarationMap": true,
     "emitDeclarationOnly": true,
     "importHelpers": true,
@@ -16,18 +18,20 @@
     "noImplicitOverride": true,
     "noImplicitReturns": true,
     "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "exactOptionalPropertyTypes": true,
     "skipLibCheck": true,
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
     "paths": {
       "@packages/*": ["packages/*"],
       "@apps/*": ["apps/*"]
-      // "@apps/user-ui/*": ["apps/user-ui/*"]
     },
     "types": ["node", "jest"],
     "strict": true,
     "target": "es2022",
-    "customConditions": ["development"]
+    "customConditions": ["development"],
+    "resolveJsonModule": true
   },
   "exclude": ["node_modules", "tmp", "dist"],
   "include": [

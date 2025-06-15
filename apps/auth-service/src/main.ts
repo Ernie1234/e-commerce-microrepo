@@ -30,7 +30,7 @@ app.use(cookieParser());
 //   res.send(swaggerDocument);
 // });
 
-app.get('/', (req, res) => {
+app.get('/', (_req, res) => {
   res.send({ message: 'Welcome auth API' });
 });
 
